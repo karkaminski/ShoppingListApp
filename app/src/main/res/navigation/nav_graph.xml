@@ -5,12 +5,16 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/mainViewPagerFragment">
     <fragment
-        android:id="@+id/shoppingListsFragment3"
-        android:name="pl.karkaminski.shoppinglistapp.ui.shoppinglists.ShoppingListsFragment"
-        android:label="shopping_lists_fragment"
-        tools:layout="@layout/shopping_lists_fragment" />
-    <fragment
         android:id="@+id/mainViewPagerFragment"
         android:name="pl.karkaminski.shoppinglistapp.ui.mainviewpager.MainViewPagerFragment"
-        android:label="MainViewPagerFragment" />
+        android:label="MainViewPagerFragment" >
+        <action
+            android:id="@+id/action_mainViewPagerFragment_to_listDetailsFragment"
+            app:destination="@id/listDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listDetailsFragment"
+        android:name="pl.karkaminski.shoppinglistapp.ui.listdetails.ListDetailsFragment"
+        android:label="list_details_fragment"
+        tools:layout="@layout/list_details_fragment" />
 </navigation>

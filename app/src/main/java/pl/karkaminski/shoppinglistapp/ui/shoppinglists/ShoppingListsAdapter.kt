@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import pl.karkaminski.shoppinglistapp.data.ShoppingList
 import pl.karkaminski.shoppinglistapp.databinding.ListItemShoppingListBinding
 
-class ShoppingListsAdapter : RecyclerView.Adapter<ShoppingListsAdapter.ShoppingListsViewHolder>() {
+class ShoppingListsAdapter(private var onClickListener : ShoppingListsAdapter.OnItemClickedListener) : RecyclerView.Adapter<ShoppingListsAdapter.ShoppingListsViewHolder>() {
 
     var shoppingListsList = listOf<ShoppingList>()
 
@@ -21,9 +21,15 @@ class ShoppingListsAdapter : RecyclerView.Adapter<ShoppingListsAdapter.ShoppingL
     }
 
     override fun onBindViewHolder(holder: ShoppingListsViewHolder, position: Int) {
+
         val shoppingList = shoppingListsList[position]
+
         holder.binding.apply {
             textViewName.text = shoppingList.name
+
+            root.setOnClickListener {
+                onClickListener.onItemClicked(shoppingListsList[position])
+            }
         }
     }
 
@@ -32,4 +38,8 @@ class ShoppingListsAdapter : RecyclerView.Adapter<ShoppingListsAdapter.ShoppingL
     inner class ShoppingListsViewHolder(
         val binding: ListItemShoppingListBinding
     ) : RecyclerView.ViewHolder(binding.root)
+
+    interface OnItemClickedListener{
+        fun onItemClicked(shoppingList : ShoppingList)
+    }
 }
