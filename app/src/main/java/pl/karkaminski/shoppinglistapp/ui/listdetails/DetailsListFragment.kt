@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import pl.karkaminski.shoppinglistapp.databinding.ListDetailsFragmentBinding
 
-class ListDetailsFragment : Fragment() {
+class DetailsListFragment : Fragment() {
 
-    private val args by navArgs<ListDetailsFragmentArgs>()
+    private val args by navArgs<DetailsListFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -18,7 +18,7 @@ class ListDetailsFragment : Fragment() {
     ): View {
         val fragmentBinding = ListDetailsFragmentBinding.inflate(inflater, container, false)
 
-        val listDetailsAdapter = ListDetailsAdapter()
+        val listDetailsAdapter = DetailsListAdapter()
         listDetailsAdapter.detailsList = args.shoppingList.details
         fragmentBinding.recyclerView.adapter = listDetailsAdapter
         return fragmentBinding.root

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import pl.karkaminski.shoppinglistapp.data.ShoppingListDetail
 import pl.karkaminski.shoppinglistapp.databinding.ListItemShoppingDetailBinding
 
-class ListDetailsAdapter : RecyclerView.Adapter<ListDetailsAdapter.ListDetailsViewHolder> (){
+class DetailsListAdapter : RecyclerView.Adapter<DetailsListAdapter.ListDetailsViewHolder> (){
 
     var detailsList = listOf<ShoppingListDetail>()
 
