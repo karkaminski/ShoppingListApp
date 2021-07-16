@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import pl.karkaminski.shoppinglistapp.data.ShoppingList
 import pl.karkaminski.shoppinglistapp.databinding.ListItemShoppingListBinding
 
-class ShoppingListsAdapter(private var onClickListener : ShoppingListsAdapter.OnItemClickedListener) : RecyclerView.Adapter<ShoppingListsAdapter.ShoppingListsViewHolder>() {
+class ShoppingListsAdapter(private var onClickListener : OnItemClickedListener)
+    : RecyclerView.Adapter<ShoppingListsAdapter.ShoppingListsViewHolder>() {
 
     var shoppingListsList = listOf<ShoppingList>()
 
@@ -35,9 +36,8 @@ class ShoppingListsAdapter(private var onClickListener : ShoppingListsAdapter.On
 
     override fun getItemCount() = shoppingListsList.size
 
-    inner class ShoppingListsViewHolder(
-        val binding: ListItemShoppingListBinding
-    ) : RecyclerView.ViewHolder(binding.root)
+    inner class ShoppingListsViewHolder(val binding: ListItemShoppingListBinding)
+        : RecyclerView.ViewHolder(binding.root)
 
     interface OnItemClickedListener{
         fun onItemClicked(shoppingList : ShoppingList)

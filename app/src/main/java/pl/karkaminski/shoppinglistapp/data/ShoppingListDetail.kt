@@ -1,4 +1,12 @@
 package pl.karkaminski.shoppinglistapp.data
 
-class ShoppingListDetail {
-}
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+class ShoppingListDetail (
+    val id: Int,
+    val name: String,
+    val quantity: Int,
+    val isChecked: Boolean
+    ) : Parcelable
