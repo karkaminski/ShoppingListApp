@@ -3,6 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="shoppingList"
+            type="pl.karkaminski.shoppinglistapp.data.ShoppingList" />
+        <variable
+            name="counter"
+            type="Integer" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,6 +34,7 @@
             android:padding="5dp"
             app:layout_constraintStart_toEndOf="@+id/image_view_icon"
             app:layout_constraintTop_toTopOf="parent"
+            android:text="@{shoppingList.name}"
             tools:text="Sunday list" />
 
         <TextView
@@ -34,7 +44,7 @@
             android:padding="5dp"
             app:layout_constraintStart_toEndOf="@+id/image_view_icon"
             app:layout_constraintTop_toBottomOf="@+id/text_view_name"
-            tools:text="Groceries done 1/10" />
+            tools:text="@{@string/shopping_list_additional_info(counter, shoppingList.details.size)}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

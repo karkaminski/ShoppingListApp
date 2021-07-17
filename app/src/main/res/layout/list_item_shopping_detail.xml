@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="shoppingListDetail"
+            type="pl.karkaminski.shoppinglistapp.data.ShoppingListDetail" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,12 +22,14 @@
             android:minHeight="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:checked="@{shoppingListDetail.checked}"/>
 
         <TextView
             android:id="@+id/text_view_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{shoppingListDetail.name}"
             tools:text="Grocery"
             app:layout_constraintStart_toEndOf="@+id/check_box"
             app:layout_constraintTop_toTopOf="parent" />
@@ -30,6 +38,7 @@
             android:id="@+id/text_view_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{Double.toString(shoppingListDetail.quantity)}"
             tools:text="10x"
             app:layout_constraintStart_toEndOf="@+id/check_box"
             app:layout_constraintTop_toBottomOf="@+id/text_view_name" />

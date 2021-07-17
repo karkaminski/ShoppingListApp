@@ -23,10 +23,9 @@ class ShoppingListsAdapter(private var onClickListener : OnItemClickedListener)
 
     override fun onBindViewHolder(holder: ShoppingListsViewHolder, position: Int) {
 
-        val shoppingList = shoppingListsList[position]
-
         holder.binding.apply {
-            textViewName.text = shoppingList.name
+            shoppingList = shoppingListsList[position]
+            counter = shoppingListsList[position].details.count { shoppingListDetail -> shoppingListDetail.isChecked  }
 
             root.setOnClickListener {
                 onClickListener.onItemClicked(shoppingListsList[position])

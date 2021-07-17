@@ -7,6 +7,6 @@ import kotlinx.parcelize.Parcelize
 class ShoppingListDetail (
     val id: Int,
     val name: String,
-    val quantity: Int,
-    val isChecked: Boolean
+    val quantity: Double,
+    val isChecked: Boolean = false
     ) : Parcelable

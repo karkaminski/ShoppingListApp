@@ -21,13 +21,7 @@ class DetailsListAdapter : RecyclerView.Adapter<DetailsListAdapter.ListDetailsVi
     }
 
     override fun onBindViewHolder(holder: ListDetailsViewHolder, position: Int) {
-        val shoppingListDetail = detailsList[position]
-
-        holder.binding.apply {
-            textViewName.text = shoppingListDetail.name
-            textViewQuantity.text = shoppingListDetail.quantity.toString()
-            checkBox.isChecked = shoppingListDetail.isChecked
-        }
+        holder.binding.shoppingListDetail = detailsList[position]
     }
 
     override fun getItemCount() = detailsList.size
