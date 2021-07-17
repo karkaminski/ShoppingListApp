@@ -1,12 +1,26 @@
 package pl.karkaminski.shoppinglistapp.data
 
 import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
+import org.jetbrains.annotations.NotNull
 
 @Parcelize
-data class ShoppingList (
-    val id: Int,
+@Entity
+data class ShoppingList(
+
+    @NotNull
+    @ColumnInfo(name = "name")
     val name: String,
-    val details: ArrayList<ShoppingListDetail>,
-    val isActive: Boolean
-    ) : Parcelable
+
+    @NotNull
+    @ColumnInfo(name = "is_active")
+    val isActive: Boolean = true
+) : Parcelable {
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "shopping_list_id")
+    var id: Int? = null
+}

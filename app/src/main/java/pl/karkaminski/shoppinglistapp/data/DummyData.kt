@@ -39,16 +39,4 @@ var shoppingListDetails3 = arrayListOf(
     ShoppingListDetail(10, "Eggs", 10.0, true),
 )
 
-var shoppingLists = listOf(
-    ShoppingList(1, "First - active", shoppingListDetails1, true),
-    ShoppingList(2, "Second - inactive", shoppingListDetails2, false),
-    ShoppingList(3, "Third - active", shoppingListDetails3, true),
-    ShoppingList(4, "Fourth - active", shoppingListDetails1, true),
-    ShoppingList(5, "Fiveth - active", shoppingListDetails2,true),
-    ShoppingList(6, "Sixth - active", shoppingListDetails3,true),
-    ShoppingList(7, "Seventh - inactive", shoppingListDetails1,false),
-    ShoppingList(8, "Eight - inactive", shoppingListDetails2,false),
-    ShoppingList(9, "Nineth - active", shoppingListDetails3,true),
-    ShoppingList(10, "Tenth - inactive", shoppingListDetails1,false),
-)
 

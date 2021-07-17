@@ -22,7 +22,7 @@ class DetailsListFragment : Fragment(), AddDetailDialog.AddDetailDialogListener{
         val fragmentBinding = ListDetailsFragmentBinding.inflate(inflater, container, false)
 
         if (args.shoppingList != null) {
-            shoppingList = args.shoppingList!!.details
+            shoppingList = args.shoppingList
             fragmentBinding.editTextName.setText(args.shoppingList!!.name)
         }
 

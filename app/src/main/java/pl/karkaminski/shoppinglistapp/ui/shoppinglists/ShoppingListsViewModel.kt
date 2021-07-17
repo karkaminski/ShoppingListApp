@@ -1,22 +1,27 @@
 package pl.karkaminski.shoppinglistapp.ui.shoppinglists
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import pl.karkaminski.shoppinglistapp.data.AppDatabase
 import pl.karkaminski.shoppinglistapp.data.ShoppingList
-import pl.karkaminski.shoppinglistapp.data.shoppingLists
+import pl.karkaminski.shoppinglistapp.data.ShoppingListRepository
 
-class ShoppingListsViewModel : ViewModel() {
+class ShoppingListsViewModel(application: Application) : AndroidViewModel(application) {
 
-    fun listsLiveData(showActive: Boolean): LiveData<ArrayList<ShoppingList>> {
-        val mutableLiveData = MutableLiveData<ArrayList<ShoppingList>> ()
-        val arrayList = arrayListOf<ShoppingList>()
-        for (list in shoppingLists) {
-            if(list.isActive == showActive){
-                arrayList.add(list)
-            }
-        }
-        mutableLiveData.postValue(arrayList)
-        return mutableLiveData
+    private val repository: ShoppingListRepository
+
+    init {
+        val shoppingListDao =
+            AppDatabase.getDatabase(application.applicationContext).shoppingListDao()
+        repository = ShoppingListRepository(shoppingListDao)
+    }
+
+    fun insert(shoppingList: ShoppingList) {
+        repository.insert(shoppingList)
+    }
+
+    fun getAll(isActive:Boolean) : LiveData<List<ShoppingList>> {
+        return repository.getAll(isActive)
     }
 }

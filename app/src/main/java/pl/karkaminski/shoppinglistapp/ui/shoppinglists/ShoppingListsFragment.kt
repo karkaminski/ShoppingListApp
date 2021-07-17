@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import pl.karkaminski.shoppinglistapp.data.ShoppingList
 import pl.karkaminski.shoppinglistapp.databinding.ShoppingListsFragmentBinding
@@ -15,7 +15,7 @@ import pl.karkaminski.shoppinglistapp.ui.mainviewpager.MainViewPagerFragmentDire
 class ShoppingListsFragment(private val showActive: Boolean) : Fragment(),
     ShoppingListsAdapter.OnItemClickedListener {
 
-    private val viewModel by viewModels<ShoppingListsViewModel>()
+    private lateinit var viewModel: ShoppingListsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,28 +26,35 @@ class ShoppingListsFragment(private val showActive: Boolean) : Fragment(),
         val shoppingListsAdapter = ShoppingListsAdapter(this)
         fragmentBinding.recyclerView.adapter = shoppingListsAdapter
 
-        viewModel.listsLiveData(showActive).observe(viewLifecycleOwner,
-            { list ->
-                shoppingListsAdapter.apply {
-                    if (list != null) {
-                        shoppingListsList = list
-                        notifyDataSetChanged()
-                    }
+        viewModel = ViewModelProvider(this).get(ShoppingListsViewModel::class.java)
+
+        viewModel.getAll(showActive).observe(
+            viewLifecycleOwner
+        ) { list ->
+            shoppingListsAdapter.apply {
+                if (list != null) {
+                    shoppingListsList = list
+                    notifyDataSetChanged()
                 }
-            })
+            }
+        }
 
         fragmentBinding.floatingActionButton.apply {
             isVisible = showActive
             setOnClickListener {
-                val action = MainViewPagerFragmentDirections.actionMainViewPagerFragmentToListDetailsFragment(null)
-                findNavController().navigate(action)
+                viewModel.insert(ShoppingList("Example list"))
+//                val action =
+//                    MainViewPagerFragmentDirections.actionMainViewPagerFragmentToListDetailsFragment(null)
+//                findNavController().navigate(action)
             }
         }
         return fragmentBinding.root
     }
 
     override fun onItemClicked(shoppingList: ShoppingList) {
-        val action = MainViewPagerFragmentDirections.actionMainViewPagerFragmentToListDetailsFragment(shoppingList)
+        val action = MainViewPagerFragmentDirections
+            .actionMainViewPagerFragmentToListDetailsFragment(shoppingList)
+
         findNavController().navigate(action)
     }
 }
