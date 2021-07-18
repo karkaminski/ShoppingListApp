@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class ShoppingListWithDetails (
-    @Embedded val listInfo : ShoppingList,
+    @Embedded val shoppingList : ShoppingList,
     @Relation(
         parentColumn = "shopping_list_id",
         entityColumn = "shopping_list_id"

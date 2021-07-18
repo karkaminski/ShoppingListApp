@@ -9,15 +9,17 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import pl.karkaminski.shoppinglistapp.data.ShoppingList
+import pl.karkaminski.shoppinglistapp.data.ShoppingListDetail
 import pl.karkaminski.shoppinglistapp.data.ShoppingListWithDetails
 import pl.karkaminski.shoppinglistapp.databinding.ListDetailsFragmentBinding
 import pl.karkaminski.shoppinglistapp.ui.ShoppingListsViewModel
 
 class DetailsListFragment : Fragment(), AddDetailDialog.AddDetailDialogListener {
 
-    private lateinit var viewModel: ShoppingListsViewModel
+    private lateinit var mViewModel: ShoppingListsViewModel
 
-    private var shoppingListWithDetails: ShoppingListWithDetails? = null
+    private var mShoppingList: ShoppingList? = null
+
     private val args by navArgs<DetailsListFragmentArgs>()
     private val listDetailsAdapter = DetailsListAdapter()
     private var newList = true
@@ -28,31 +30,33 @@ class DetailsListFragment : Fragment(), AddDetailDialog.AddDetailDialogListener 
     ): View {
         val fragmentBinding = ListDetailsFragmentBinding.inflate(inflater, container, false)
 
-        viewModel = ViewModelProvider(this).get(ShoppingListsViewModel::class.java)
+        mViewModel = ViewModelProvider(this).get(ShoppingListsViewModel::class.java)
+        mShoppingList = args.shoppingList
 
-        if (args.shoppingListWithDetails != null) {
-            shoppingListWithDetails = args.shoppingListWithDetails!!
-            newList = false
-            fragmentBinding.editTextName.setText(shoppingListWithDetails!!.listInfo.name)
+        fragmentBinding.editTextName.setText(mShoppingList?.name)
+        fragmentBinding.recyclerView.adapter = listDetailsAdapter
+
+        if(mShoppingList==null){
+            mShoppingList = ShoppingList("")
         }
 
-        fragmentBinding.editTextName.setOnFocusChangeListener {
-                viewEditTextName, hasFocus ->
-            if (!hasFocus) {
-                if (shoppingListWithDetails == null) {
-                    shoppingListWithDetails = ShoppingListWithDetails(
-                        ShoppingList((viewEditTextName as EditText).text.toString()),
-                        arrayListOf()
-                    )
+        mViewModel.getAllDetailsForShoppingList(mShoppingList!!).observe(
+            viewLifecycleOwner
+        ) { list ->
+            listDetailsAdapter.apply {
+                if(list!=null){
+                    detailsList = list
+                    notifyDataSetChanged()
                 }
-                else {
-                    shoppingListWithDetails!!.listInfo.name = (viewEditTextName as EditText).text.toString()
-                }
-                insertOrUpdate(shoppingListWithDetails!!.listInfo)
             }
         }
 
-        fragmentBinding.recyclerView.adapter = listDetailsAdapter
+        fragmentBinding.editTextName.setOnFocusChangeListener { viewEditTextName, hasFocus ->
+            if (!hasFocus) {
+                mShoppingList!!.name = (viewEditTextName as EditText).text.toString()
+                insertOrUpdate(mShoppingList!!)
+            }
+        }
 
         fragmentBinding.floatingActionButton.setOnClickListener {
             val dialog = AddDetailDialog(this)
@@ -64,14 +68,16 @@ class DetailsListFragment : Fragment(), AddDetailDialog.AddDetailDialogListener 
 
     private fun insertOrUpdate(shoppingList: ShoppingList) {
         if (newList) {
-            viewModel.insertShoppingList(shoppingList)
+            mViewModel.insertShoppingList(shoppingList)
         } else {
-            viewModel.updateShoppingList(shoppingList)
+            mViewModel.updateShoppingList(shoppingList)
         }
     }
 
     override fun addDetail(detailName: String, detailQuantity: Double) {
-//        shoppingList.add(ShoppingListDetail(1, detailName, detailQuantity))
+        mViewModel.insertDetailForShoppingList(
+            mShoppingList!!,
+            ShoppingListDetail(detailName, detailQuantity))
         listDetailsAdapter.notifyDataSetChanged()
     }
 }

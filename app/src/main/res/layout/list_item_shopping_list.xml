@@ -31,7 +31,7 @@
             android:padding="5dp"
             app:layout_constraintStart_toEndOf="@+id/image_view_icon"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{shoppingList.listInfo.name}"
+            android:text="@{shoppingList.shoppingList.name}"
             tools:text="Sunday list" />
 
         <TextView

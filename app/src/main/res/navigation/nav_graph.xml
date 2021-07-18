@@ -18,8 +18,8 @@
         android:label="list_details_fragment"
         tools:layout="@layout/list_details_fragment" >
         <argument
-            android:name="ShoppingListWithDetails"
-            app:argType="pl.karkaminski.shoppinglistapp.data.ShoppingListWithDetails"
+            android:name="ShoppingList"
+            app:argType="pl.karkaminski.shoppinglistapp.data.ShoppingList"
             app:nullable="true" />
     </fragment>
 </navigation>

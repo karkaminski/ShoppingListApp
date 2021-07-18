@@ -3,10 +3,7 @@ package pl.karkaminski.shoppinglistapp.ui
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import pl.karkaminski.shoppinglistapp.data.AppDatabase
-import pl.karkaminski.shoppinglistapp.data.ShoppingList
-import pl.karkaminski.shoppinglistapp.data.ShoppingListRepository
-import pl.karkaminski.shoppinglistapp.data.ShoppingListWithDetails
+import pl.karkaminski.shoppinglistapp.data.*
 
 class ShoppingListsViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -28,7 +25,16 @@ class ShoppingListsViewModel(application: Application) : AndroidViewModel(applic
         repository.updateShoppingList(shoppingList)
     }
 
-    fun getAll(isActive:Boolean) : LiveData<List<ShoppingListWithDetails>> {
+    fun getAllShoppingListsWithDetails(isActive:Boolean) : LiveData<List<ShoppingListWithDetails>> {
         return repository.getAllListsWithDetails(isActive)
     }
+
+    fun insertDetailForShoppingList(shoppingList: ShoppingList, shoppingListDetail: ShoppingListDetail){
+        repository.insertDetailForList(shoppingList, shoppingListDetail)
+    }
+
+    fun getAllDetailsForShoppingList(shoppingList: ShoppingList) : LiveData<List<ShoppingListDetail>>{
+        return repository.getAllDetailsForShoppingList(shoppingList)
+    }
+
 }

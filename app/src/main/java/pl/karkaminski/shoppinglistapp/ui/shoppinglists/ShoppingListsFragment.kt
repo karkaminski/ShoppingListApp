@@ -24,12 +24,13 @@ class ShoppingListsFragment(private val showActive: Boolean) : Fragment(),
     ): View {
         val fragmentBinding = ShoppingListsFragmentBinding.inflate(inflater, container, false)
 
+        viewModel = ViewModelProvider(this).get(ShoppingListsViewModel::class.java)
+
+
         val shoppingListsAdapter = ShoppingListsAdapter(this)
         fragmentBinding.recyclerView.adapter = shoppingListsAdapter
 
-        viewModel = ViewModelProvider(this).get(ShoppingListsViewModel::class.java)
-
-        viewModel.getAll(showActive).observe(
+        viewModel.getAllShoppingListsWithDetails(showActive).observe(
             viewLifecycleOwner
         ) { list ->
             shoppingListsAdapter.apply {
@@ -53,7 +54,7 @@ class ShoppingListsFragment(private val showActive: Boolean) : Fragment(),
 
     override fun onItemClicked(shoppingListWithDetails: ShoppingListWithDetails) {
         val action = MainViewPagerFragmentDirections
-            .actionMainViewPagerFragmentToListDetailsFragment(shoppingListWithDetails)
+            .actionMainViewPagerFragmentToListDetailsFragment(shoppingListWithDetails.shoppingList)
 
         findNavController().navigate(action)
     }
