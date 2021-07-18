@@ -74,8 +74,10 @@ class DetailsListFragment : Fragment(),
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.list_details_menu, menu)
-        val menuItem = menu.findItem(R.id.archive_list_item)
-        menuItem.setVisible(!newList && mShoppingList.isActive)
+        val itemArchive = menu.findItem(R.id.archive_list_item)
+        itemArchive.setVisible(!newList && mShoppingList.isActive)
+        val itemRename = menu.findItem(R.id.rename_item)
+        itemRename.setVisible(!newList && mShoppingList.isActive)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
