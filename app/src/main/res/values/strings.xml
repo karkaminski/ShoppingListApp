@@ -13,6 +13,8 @@
     <string name="rename_list">Rename list</string>
     <string name="insert_list_name">Insert list name</string>
     <string name="set_list_name">Set list name</string>
+    <string name="add_your_first_list">Add your first list</string>
+    <string name="add_items_to_list">Add items to list</string>
 
     <string-array name="units">
         <item>piece</item>

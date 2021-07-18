@@ -37,6 +37,13 @@ class ShoppingListsFragment(private val showActive: Boolean) :
         viewModel.getAllShoppingListsWithDetails(showActive).observe(
             viewLifecycleOwner
         ) { list ->
+            if(list.isEmpty()){
+                fragmentBinding.recyclerView.visibility = View.GONE
+                fragmentBinding.textViewEmptyList.visibility = View.VISIBLE
+            } else {
+                fragmentBinding.recyclerView.visibility = View.VISIBLE
+                fragmentBinding.textViewEmptyList.visibility = View.GONE
+            }
             shoppingListsAdapter.apply {
                 if (list != null) {
                     shoppingListsList = list
@@ -50,7 +57,6 @@ class ShoppingListsFragment(private val showActive: Boolean) :
             setOnClickListener {
                 createListWithDialog()
             }
-
         }
         return fragmentBinding.root
     }

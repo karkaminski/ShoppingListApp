@@ -8,6 +8,15 @@
         android:layout_height="match_parent"
         tools:context=".ui.shoppinglists.ShoppingListsFragment">
 
+        <TextView
+            android:id="@+id/text_view_empty_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/add_your_first_list"
+            android:textSize="30sp"
+            android:visibility="gone"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
@@ -18,7 +27,8 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/list_item_shopping_list" />
+            tools:listitem="@layout/list_item_shopping_list"
+            android:visibility="visible"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floating_action_button"

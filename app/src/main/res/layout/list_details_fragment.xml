@@ -10,6 +10,15 @@
         android:descendantFocusability="beforeDescendants"
         android:focusableInTouchMode="true">
 
+        <TextView
+            android:id="@+id/text_view_empty_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/add_items_to_list"
+            android:textSize="30sp"
+            android:visibility="gone"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

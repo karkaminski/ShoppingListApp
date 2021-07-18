@@ -50,10 +50,18 @@ class DetailsListFragment : Fragment(),
         mViewModel.getAllDetailsForShoppingList(mShoppingList).observe(
             viewLifecycleOwner
         ) { list ->
+            if(list.isEmpty()){
+                fragmentBinding.recyclerView.visibility = View.GONE
+                fragmentBinding.textViewEmptyList.visibility = View.VISIBLE
+            } else {
+                fragmentBinding.recyclerView.visibility = View.VISIBLE
+                fragmentBinding.textViewEmptyList.visibility = View.GONE
+            }
             listDetailsAdapter.apply {
                 if (list != null) {
                     detailsList = list
                     notifyDataSetChanged()
+
                 }
             }
         }
