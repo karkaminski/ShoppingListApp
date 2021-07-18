@@ -1,10 +1,14 @@
 package pl.karkaminski.shoppinglistapp.ui.listdetails
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
@@ -36,7 +40,7 @@ class DetailsListFragment : Fragment(), AddDetailDialog.AddDetailDialogListener 
         fragmentBinding.editTextName.setText(mShoppingList?.name)
         fragmentBinding.recyclerView.adapter = listDetailsAdapter
 
-        if(mShoppingList==null){
+        if (mShoppingList == null) {
             mShoppingList = ShoppingList("")
         }
 
@@ -44,7 +48,7 @@ class DetailsListFragment : Fragment(), AddDetailDialog.AddDetailDialogListener 
             viewLifecycleOwner
         ) { list ->
             listDetailsAdapter.apply {
-                if(list!=null){
+                if (list != null) {
                     detailsList = list
                     notifyDataSetChanged()
                 }
@@ -59,6 +63,8 @@ class DetailsListFragment : Fragment(), AddDetailDialog.AddDetailDialogListener 
         }
 
         fragmentBinding.floatingActionButton.setOnClickListener {
+            fragmentBinding.editTextName.clearFocus()
+
             val dialog = AddDetailDialog(this)
             dialog.show(requireActivity().supportFragmentManager, "addDetailDialog")
         }
@@ -77,7 +83,8 @@ class DetailsListFragment : Fragment(), AddDetailDialog.AddDetailDialogListener 
     override fun addDetail(detailName: String, detailQuantity: Double) {
         mViewModel.insertDetailForShoppingList(
             mShoppingList!!,
-            ShoppingListDetail(detailName, detailQuantity))
+            ShoppingListDetail(detailName, detailQuantity)
+        )
         listDetailsAdapter.notifyDataSetChanged()
     }
 }

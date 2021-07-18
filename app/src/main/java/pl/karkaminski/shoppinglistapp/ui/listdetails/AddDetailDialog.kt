@@ -25,7 +25,7 @@ class AddDetailDialog(private val addDetailDialogListener: AddDetailDialogListen
                 ) { _, _ ->
                     addDetailDialogListener.addDetail(
                         editTextName.text.toString(),
-                        10.0)
+                        editTextQuantity.text.toString().toDouble())
                 }
                 .setNegativeButton(
                     getString(R.string.add_detail_cancel)

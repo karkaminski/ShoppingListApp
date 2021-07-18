@@ -6,7 +6,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.listdetails.DetailsListFragment">
+        tools:context=".ui.listdetails.DetailsListFragment"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true">
 
         <LinearLayout
             android:layout_width="match_parent"

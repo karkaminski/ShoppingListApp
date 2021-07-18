@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edit_text_name"
-        android:hint="@string/quantity" />
+        android:hint="@string/quantity"
+        android:inputType="numberDecimal"/>
 
 </RelativeLayout>
