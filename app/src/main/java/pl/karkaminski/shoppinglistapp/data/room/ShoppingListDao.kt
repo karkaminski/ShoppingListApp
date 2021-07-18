@@ -6,7 +6,7 @@ import androidx.room.*
 @Dao
 interface ShoppingListDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     fun insert(shoppingList: ShoppingList)
 
     @Update

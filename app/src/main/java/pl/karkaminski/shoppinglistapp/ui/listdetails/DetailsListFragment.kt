@@ -2,7 +2,6 @@ package pl.karkaminski.shoppinglistapp.ui.listdetails
 
 import android.os.Bundle
 import android.view.*
-import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -12,6 +11,8 @@ import pl.karkaminski.shoppinglistapp.data.ShoppingList
 import pl.karkaminski.shoppinglistapp.data.ShoppingListDetail
 import pl.karkaminski.shoppinglistapp.databinding.ListDetailsFragmentBinding
 import pl.karkaminski.shoppinglistapp.ui.ShoppingListsViewModel
+import pl.karkaminski.shoppinglistapp.ui.dialogs.AddDetailDialog
+import pl.karkaminski.shoppinglistapp.ui.dialogs.RenameDialog
 
 class DetailsListFragment : Fragment(),
     AddDetailDialog.AddDetailDialogListener,
@@ -20,7 +21,7 @@ class DetailsListFragment : Fragment(),
 
     private lateinit var mViewModel: ShoppingListsViewModel
 
-    private var mShoppingList: ShoppingList? = null
+    private lateinit var mShoppingList: ShoppingList
 
     private val args by navArgs<DetailsListFragmentArgs>()
     private val listDetailsAdapter = DetailsListAdapter(this)
@@ -39,21 +40,14 @@ class DetailsListFragment : Fragment(),
         fragmentBinding = ListDetailsFragmentBinding.inflate(inflater, container, false)
 
         mViewModel = ViewModelProvider(this).get(ShoppingListsViewModel::class.java)
-        mShoppingList = args.shoppingList
+        mShoppingList = args.shoppingList!!
 
-        fragmentBinding.editTextName.setText(mShoppingList?.name)
+        fragmentBinding.editTextName.setText(mShoppingList.name)
 
         fragmentBinding.recyclerView.adapter = listDetailsAdapter
+        listDetailsAdapter.isListActive = mShoppingList.isActive
 
-        if (mShoppingList == null) {
-            mShoppingList = ShoppingList("")
-            newList = true
-            renameListWithDialog()
-        }
-
-        listDetailsAdapter.isListActive = mShoppingList!!.isActive
-
-        mViewModel.getAllDetailsForShoppingList(mShoppingList!!).observe(
+        mViewModel.getAllDetailsForShoppingList(mShoppingList).observe(
             viewLifecycleOwner
         ) { list ->
             listDetailsAdapter.apply {
@@ -64,7 +58,7 @@ class DetailsListFragment : Fragment(),
             }
         }
 
-        if (mShoppingList!!.isActive) {
+        if (mShoppingList.isActive) {
             fragmentBinding.floatingActionButton.visibility = View.VISIBLE
         } else {
             fragmentBinding.floatingActionButton.visibility = View.GONE
@@ -81,13 +75,13 @@ class DetailsListFragment : Fragment(),
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.list_details_menu, menu)
         val menuItem = menu.findItem(R.id.archive_list_item)
-        menuItem.setVisible(!newList && mShoppingList!!.isActive)
+        menuItem.setVisible(!newList && mShoppingList.isActive)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.archive_list_item) {
-            mShoppingList!!.isActive = false
-            mViewModel.updateShoppingList(mShoppingList!!)
+            mShoppingList.isActive = false
+            mViewModel.updateShoppingList(mShoppingList)
             val action =
                 DetailsListFragmentDirections.actionListDetailsFragmentToMainViewPagerFragment2()
             findNavController().navigate(action)
@@ -110,7 +104,7 @@ class DetailsListFragment : Fragment(),
 
     override fun addDetail(detailName: String, detailQuantity: Double) {
         mViewModel.insertDetailForShoppingList(
-            mShoppingList!!,
+            mShoppingList,
             ShoppingListDetail(detailName, detailQuantity)
         )
         listDetailsAdapter.notifyDataSetChanged()
@@ -121,8 +115,8 @@ class DetailsListFragment : Fragment(),
     }
 
     override fun renameList(listName: String) {
-        mShoppingList!!.name = listName
-        insertOrUpdateShoppingList(mShoppingList!!)
+        mShoppingList.name = listName
+        insertOrUpdateShoppingList(mShoppingList)
         fragmentBinding.editTextName.text = listName
     }
 

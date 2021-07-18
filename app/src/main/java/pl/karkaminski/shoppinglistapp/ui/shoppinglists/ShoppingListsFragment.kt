@@ -8,14 +8,18 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import pl.karkaminski.shoppinglistapp.data.ShoppingList
+import pl.karkaminski.shoppinglistapp.data.ShoppingListDetail
 import pl.karkaminski.shoppinglistapp.data.ShoppingListWithDetails
 import pl.karkaminski.shoppinglistapp.databinding.ShoppingListsFragmentBinding
 import pl.karkaminski.shoppinglistapp.ui.ShoppingListsViewModel
-import pl.karkaminski.shoppinglistapp.ui.listdetails.DetailsListFragment
+import pl.karkaminski.shoppinglistapp.ui.dialogs.RenameDialog
 import pl.karkaminski.shoppinglistapp.ui.mainviewpager.MainViewPagerFragmentDirections
 
-class ShoppingListsFragment(private val showActive: Boolean) : Fragment(),
-    ShoppingListsAdapter.OnItemClickedListener {
+class ShoppingListsFragment(private val showActive: Boolean) :
+    Fragment(),
+    ShoppingListsAdapter.OnItemClickedListener,
+    RenameDialog.RenameListDialogListener{
 
     private lateinit var viewModel: ShoppingListsViewModel
 
@@ -44,10 +48,9 @@ class ShoppingListsFragment(private val showActive: Boolean) : Fragment(),
         fragmentBinding.floatingActionButton.apply {
             isVisible = showActive
             setOnClickListener {
-                val action =
-                    MainViewPagerFragmentDirections.actionMainViewPagerFragmentToListDetailsFragment(null)
-                findNavController().navigate(action)
+                createListWithDialog()
             }
+
         }
         return fragmentBinding.root
     }
@@ -57,5 +60,16 @@ class ShoppingListsFragment(private val showActive: Boolean) : Fragment(),
             .actionMainViewPagerFragmentToListDetailsFragment(shoppingListWithDetails.shoppingList)
 
         findNavController().navigate(action)
+    }
+
+    override fun renameList(listName: String) {
+        val shoppingList = ShoppingList(listName)
+        viewModel.insertShoppingList(shoppingList)
+
+    }
+
+    private fun createListWithDialog() {
+        val dialog = RenameDialog(this)
+        dialog.show(requireActivity().supportFragmentManager, "renameListDialog")
     }
 }

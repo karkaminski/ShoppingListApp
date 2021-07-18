@@ -1,4 +1,4 @@
-package pl.karkaminski.shoppinglistapp.ui.listdetails
+package pl.karkaminski.shoppinglistapp.ui.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
