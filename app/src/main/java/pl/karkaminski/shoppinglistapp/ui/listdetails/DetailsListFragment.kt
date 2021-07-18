@@ -5,12 +5,14 @@ import android.view.*
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import pl.karkaminski.shoppinglistapp.R
 import pl.karkaminski.shoppinglistapp.data.ShoppingList
 import pl.karkaminski.shoppinglistapp.data.ShoppingListDetail
 import pl.karkaminski.shoppinglistapp.databinding.ListDetailsFragmentBinding
 import pl.karkaminski.shoppinglistapp.ui.ShoppingListsViewModel
+import pl.karkaminski.shoppinglistapp.ui.mainviewpager.MainViewPagerFragmentDirections
 
 class DetailsListFragment : Fragment(), AddDetailDialog.AddDetailDialogListener,
 DetailsListAdapter.OnItemClickedListener{
@@ -80,7 +82,8 @@ DetailsListAdapter.OnItemClickedListener{
         if(item.itemId == R.id.archive_list_item){
             mShoppingList!!.isActive = false
             mViewModel.updateShoppingList(mShoppingList!!)
-            requireActivity().supportFragmentManager.popBackStack()
+            val action = DetailsListFragmentDirections.actionListDetailsFragmentToMainViewPagerFragment2()
+            findNavController().navigate(action)
         }
         return super.onOptionsItemSelected(item)
     }

@@ -21,5 +21,9 @@
             android:name="ShoppingList"
             app:argType="pl.karkaminski.shoppinglistapp.data.ShoppingList"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_listDetailsFragment_to_mainViewPagerFragment2"
+            app:destination="@id/mainViewPagerFragment"
+            app:popUpTo="@id/mainViewPagerFragment" />
     </fragment>
 </navigation>
