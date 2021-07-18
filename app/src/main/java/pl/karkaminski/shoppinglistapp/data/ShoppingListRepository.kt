@@ -13,6 +13,10 @@ class ShoppingListRepository(
         CoroutineScope(IO).launch { shoppingListDao.insert(shoppingList) }
     }
 
+    fun updateShoppingList(shoppingList: ShoppingList) {
+        CoroutineScope(IO).launch { shoppingListDao.update(shoppingList) }
+    }
+
     fun insertDetail(shoppingListDetail: ShoppingListDetail) {
         CoroutineScope(IO).launch { shoppingListDetailDao.insert(shoppingListDetail) }
     }

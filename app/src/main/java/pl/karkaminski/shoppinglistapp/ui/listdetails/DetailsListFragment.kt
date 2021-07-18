@@ -4,14 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
-import pl.karkaminski.shoppinglistapp.data.ShoppingListDetail
+import pl.karkaminski.shoppinglistapp.data.ShoppingList
 import pl.karkaminski.shoppinglistapp.data.ShoppingListWithDetails
 import pl.karkaminski.shoppinglistapp.databinding.ListDetailsFragmentBinding
+import pl.karkaminski.shoppinglistapp.ui.ShoppingListsViewModel
 
-class DetailsListFragment : Fragment(), AddDetailDialog.AddDetailDialogListener{
+class DetailsListFragment : Fragment(), AddDetailDialog.AddDetailDialogListener {
 
+    private lateinit var viewModel: ShoppingListsViewModel
+
+    private var shoppingListWithDetails: ShoppingListWithDetails? = null
     private val args by navArgs<DetailsListFragmentArgs>()
     private val listDetailsAdapter = DetailsListAdapter()
 
@@ -21,10 +27,27 @@ class DetailsListFragment : Fragment(), AddDetailDialog.AddDetailDialogListener{
     ): View {
         val fragmentBinding = ListDetailsFragmentBinding.inflate(inflater, container, false)
 
-        if (args.shoppingListWithDetails!= null) {
-            val shoppingList = args.shoppingListWithDetails!!
-            fragmentBinding.editTextName.setText(shoppingList.listInfo.name)
+        viewModel = ViewModelProvider(this).get(ShoppingListsViewModel::class.java)
+
+        if (args.shoppingListWithDetails != null) {
+            shoppingListWithDetails = args.shoppingListWithDetails!!
+            fragmentBinding.editTextName.setText(shoppingListWithDetails!!.listInfo.name)
         }
+
+        fragmentBinding.editTextName.setOnFocusChangeListener {
+                viewEditTextName, hasFocus ->
+            if (!hasFocus) {
+                if (shoppingListWithDetails == null) {
+                    shoppingListWithDetails = ShoppingListWithDetails(
+                        ShoppingList((viewEditTextName as EditText).text.toString()),
+                        arrayListOf()
+                    )
+                }
+                viewModel.insertShoppingList(shoppingListWithDetails!!.listInfo)
+            }
+        }
+
+
 
         fragmentBinding.recyclerView.adapter = listDetailsAdapter
 

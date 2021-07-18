@@ -1,4 +1,4 @@
-package pl.karkaminski.shoppinglistapp.ui.shoppinglists
+package pl.karkaminski.shoppinglistapp.ui
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -20,8 +20,12 @@ class ShoppingListsViewModel(application: Application) : AndroidViewModel(applic
         repository = ShoppingListRepository(shoppingListDao, shoppingListDetailDao)
     }
 
-    fun insert(shoppingList: ShoppingList) {
+    fun insertShoppingList(shoppingList: ShoppingList) {
         repository.insertShoppingList(shoppingList)
+    }
+
+    fun updateShoppingList(shoppingList: ShoppingList) {
+        repository.updateShoppingList(shoppingList)
     }
 
     fun getAll(isActive:Boolean) : LiveData<List<ShoppingListWithDetails>> {

@@ -6,8 +6,11 @@ import androidx.room.*
 @Dao
 interface ShoppingListDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(shoppingList: ShoppingList)
+
+    @Update
+    fun update(shoppingList: ShoppingList)
 
     @Query("SELECT * FROM ShoppingList WHERE is_active = 1")
     fun getAllActive(): LiveData<List<ShoppingList>>
@@ -22,6 +25,5 @@ interface ShoppingListDao {
     @Transaction
     @Query("SELECT * FROM ShoppingList")
     fun getAllInactiveWithDetails(): LiveData<List<ShoppingListWithDetails>>
-
 }
 

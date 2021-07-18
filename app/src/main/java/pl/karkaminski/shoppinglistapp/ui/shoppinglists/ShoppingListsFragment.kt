@@ -8,10 +8,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import pl.karkaminski.shoppinglistapp.data.ShoppingList
-import pl.karkaminski.shoppinglistapp.data.ShoppingListDetail
 import pl.karkaminski.shoppinglistapp.data.ShoppingListWithDetails
 import pl.karkaminski.shoppinglistapp.databinding.ShoppingListsFragmentBinding
+import pl.karkaminski.shoppinglistapp.ui.ShoppingListsViewModel
 import pl.karkaminski.shoppinglistapp.ui.mainviewpager.MainViewPagerFragmentDirections
 
 class ShoppingListsFragment(private val showActive: Boolean) : Fragment(),
