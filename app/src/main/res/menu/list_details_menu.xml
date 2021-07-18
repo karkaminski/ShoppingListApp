@@ -8,4 +8,10 @@
         android:title="@string/archive_list"
         app:showAsAction="ifRoom"/>
 
+    <item
+        android:id="@+id/rename_item"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="@string/rename_list"
+        app:showAsAction="never"/>
+
 </menu>

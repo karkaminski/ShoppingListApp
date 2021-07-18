@@ -7,8 +7,8 @@ import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import pl.karkaminski.shoppinglistapp.R
 
-class AddDetailDialog(private val addDetailDialogListener: AddDetailDialogListener) :
-    DialogFragment() {
+class AddDetailDialog(private val addDetailDialogListener: AddDetailDialogListener)
+    : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -21,14 +21,14 @@ class AddDetailDialog(private val addDetailDialogListener: AddDetailDialogListen
                 builder.setView(view)
                 .setTitle(getString(R.string.add_product))
                 .setPositiveButton(
-                    getString(R.string.add_detail_save)
+                    getString(R.string.save)
                 ) { _, _ ->
                     addDetailDialogListener.addDetail(
                         editTextName.text.toString(),
                         editTextQuantity.text.toString().toDouble())
                 }
                 .setNegativeButton(
-                    getString(R.string.add_detail_cancel)
+                    getString(R.string.cancel)
                 ) { _, _ ->
                     dialog?.cancel()
                 }
