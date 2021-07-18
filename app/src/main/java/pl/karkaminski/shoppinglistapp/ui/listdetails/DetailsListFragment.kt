@@ -20,6 +20,7 @@ class DetailsListFragment : Fragment(), AddDetailDialog.AddDetailDialogListener 
     private var shoppingListWithDetails: ShoppingListWithDetails? = null
     private val args by navArgs<DetailsListFragmentArgs>()
     private val listDetailsAdapter = DetailsListAdapter()
+    private var newList = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +32,7 @@ class DetailsListFragment : Fragment(), AddDetailDialog.AddDetailDialogListener 
 
         if (args.shoppingListWithDetails != null) {
             shoppingListWithDetails = args.shoppingListWithDetails!!
+            newList = false
             fragmentBinding.editTextName.setText(shoppingListWithDetails!!.listInfo.name)
         }
 
@@ -43,11 +45,12 @@ class DetailsListFragment : Fragment(), AddDetailDialog.AddDetailDialogListener 
                         arrayListOf()
                     )
                 }
-                viewModel.insertShoppingList(shoppingListWithDetails!!.listInfo)
+                else {
+                    shoppingListWithDetails!!.listInfo.name = (viewEditTextName as EditText).text.toString()
+                }
+                insertOrUpdate(shoppingListWithDetails!!.listInfo)
             }
         }
-
-
 
         fragmentBinding.recyclerView.adapter = listDetailsAdapter
 
@@ -57,6 +60,14 @@ class DetailsListFragment : Fragment(), AddDetailDialog.AddDetailDialogListener 
         }
 
         return fragmentBinding.root
+    }
+
+    private fun insertOrUpdate(shoppingList: ShoppingList) {
+        if (newList) {
+            viewModel.insertShoppingList(shoppingList)
+        } else {
+            viewModel.updateShoppingList(shoppingList)
+        }
     }
 
     override fun addDetail(detailName: String, detailQuantity: Double) {

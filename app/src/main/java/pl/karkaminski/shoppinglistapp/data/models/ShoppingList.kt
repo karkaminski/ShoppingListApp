@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull
 @Entity
 data class ShoppingList(
     @NotNull
-    val name: String,
+    var name: String,
 
     @NotNull
     @ColumnInfo(name = "is_active")
