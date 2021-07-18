@@ -3,6 +3,7 @@ package pl.karkaminski.shoppinglistapp.ui.listdetails
 import android.os.Bundle
 import android.view.*
 import android.widget.EditText
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -23,7 +24,7 @@ DetailsListAdapter.OnItemClickedListener{
 
     private val args by navArgs<DetailsListFragmentArgs>()
     private val listDetailsAdapter = DetailsListAdapter(this)
-    private var newList = true
+    private var newList = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +45,10 @@ DetailsListAdapter.OnItemClickedListener{
 
         if (mShoppingList == null) {
             mShoppingList = ShoppingList("")
+            newList = true
         }
+
+        listDetailsAdapter.isListActive = mShoppingList!!.isActive
 
         mViewModel.getAllDetailsForShoppingList(mShoppingList!!).observe(
             viewLifecycleOwner
@@ -64,6 +68,13 @@ DetailsListAdapter.OnItemClickedListener{
             }
         }
 
+        if (mShoppingList!!.isActive){
+            fragmentBinding.floatingActionButton.visibility = View.VISIBLE
+        }
+        else {
+            fragmentBinding.floatingActionButton.visibility = View.GONE
+        }
+
         fragmentBinding.floatingActionButton.setOnClickListener {
             fragmentBinding.editTextName.clearFocus()
 
@@ -76,6 +87,8 @@ DetailsListAdapter.OnItemClickedListener{
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.list_details_menu, menu)
+        val menuItem = menu.findItem(R.id.archive_list_item)
+        menuItem.setVisible(!newList && mShoppingList!!.isActive)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
