@@ -26,6 +26,7 @@ class ShoppingListsAdapter(private var onClickListener : OnItemClickedListener)
 
         holder.binding.apply {
             shoppingList = shoppingListsList[position]
+            counter = shoppingListsList[position].details.count { shoppingListDetail -> shoppingListDetail.isChecked  }
 
             root.setOnClickListener {
                 onClickListener.onItemClicked(shoppingListsList[position])
