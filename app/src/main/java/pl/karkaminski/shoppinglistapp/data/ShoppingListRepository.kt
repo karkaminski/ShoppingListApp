@@ -22,6 +22,10 @@ class ShoppingListRepository(
         CoroutineScope(IO).launch { shoppingListDetailDao.insert(shoppingListDetail) }
     }
 
+    fun updateDetail(shoppingListDetail: ShoppingListDetail) {
+        CoroutineScope(IO).launch { shoppingListDetailDao.update(shoppingListDetail) }
+    }
+
     fun getAllListsWithDetails(isActive: Boolean): LiveData<List<ShoppingListWithDetails>> {
         return if (isActive) shoppingListDao.getAllActiveWithDetails() else shoppingListDao.getAllInactiveWithDetails()
     }

@@ -37,4 +37,8 @@ class ShoppingListsViewModel(application: Application) : AndroidViewModel(applic
         return repository.getAllDetailsForShoppingList(shoppingList)
     }
 
+    fun updateDetail(shoppingListDetail: ShoppingListDetail) {
+        repository.updateDetail(shoppingListDetail)
+    }
+
 }

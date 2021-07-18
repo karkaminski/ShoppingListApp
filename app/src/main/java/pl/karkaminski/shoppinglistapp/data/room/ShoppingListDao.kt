@@ -19,11 +19,11 @@ interface ShoppingListDao {
     fun getAllInactive(): LiveData<List<ShoppingList>>
 
     @Transaction
-    @Query("SELECT * FROM ShoppingList")
+    @Query("SELECT * FROM ShoppingList WHERE is_active = 1")
     fun getAllActiveWithDetails(): LiveData<List<ShoppingListWithDetails>>
 
     @Transaction
-    @Query("SELECT * FROM ShoppingList")
+    @Query("SELECT * FROM ShoppingList WHERE is_active = 0")
     fun getAllInactiveWithDetails(): LiveData<List<ShoppingListWithDetails>>
 }
 

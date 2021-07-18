@@ -9,6 +9,7 @@
     <string name="product_name">Product name</string>
     <string name="quantity">Quantity</string>
     <string name="add_product">Add Product</string>
+    <string name="archive_list">Archive list</string>
 
     <string-array name="units">
         <item>piece</item>

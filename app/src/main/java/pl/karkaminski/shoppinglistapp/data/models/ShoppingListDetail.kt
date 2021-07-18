@@ -17,7 +17,7 @@ class ShoppingListDetail (
 
     @NotNull
     @ColumnInfo(name = "is_checked")
-    val isChecked: Boolean = false
+    var isChecked: Boolean = false
     ) : Parcelable {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "detail_id")

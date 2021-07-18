@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import pl.karkaminski.shoppinglistapp.data.ShoppingListDetail
 import pl.karkaminski.shoppinglistapp.databinding.ListItemShoppingDetailBinding
 
-class DetailsListAdapter : RecyclerView.Adapter<DetailsListAdapter.ListDetailsViewHolder> (){
+class DetailsListAdapter(private var onItemClickedListener: OnItemClickedListener) : RecyclerView.Adapter<DetailsListAdapter.ListDetailsViewHolder> (){
 
     var detailsList = listOf<ShoppingListDetail>()
 
@@ -21,11 +21,21 @@ class DetailsListAdapter : RecyclerView.Adapter<DetailsListAdapter.ListDetailsVi
     }
 
     override fun onBindViewHolder(holder: ListDetailsViewHolder, position: Int) {
-        holder.binding.shoppingListDetail = detailsList[position]
+        var shoppingListDetail = detailsList[position]
+        holder.binding.shoppingListDetail = shoppingListDetail
+
+        holder.binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
+            shoppingListDetail.isChecked = isChecked
+            onItemClickedListener.onItemClicked(shoppingListDetail)
+        }
     }
 
     override fun getItemCount() = detailsList.size
 
     inner class ListDetailsViewHolder(val binding: ListItemShoppingDetailBinding)
         : RecyclerView.ViewHolder(binding.root)
+
+    interface OnItemClickedListener {
+        fun onItemClicked(shoppingListDetail: ShoppingListDetail)
+    }
 }

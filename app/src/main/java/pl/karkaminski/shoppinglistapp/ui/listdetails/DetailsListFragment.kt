@@ -1,32 +1,32 @@
 package pl.karkaminski.shoppinglistapp.ui.listdetails
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.EditText
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
+import pl.karkaminski.shoppinglistapp.R
 import pl.karkaminski.shoppinglistapp.data.ShoppingList
 import pl.karkaminski.shoppinglistapp.data.ShoppingListDetail
-import pl.karkaminski.shoppinglistapp.data.ShoppingListWithDetails
 import pl.karkaminski.shoppinglistapp.databinding.ListDetailsFragmentBinding
 import pl.karkaminski.shoppinglistapp.ui.ShoppingListsViewModel
 
-class DetailsListFragment : Fragment(), AddDetailDialog.AddDetailDialogListener {
+class DetailsListFragment : Fragment(), AddDetailDialog.AddDetailDialogListener,
+DetailsListAdapter.OnItemClickedListener{
 
     private lateinit var mViewModel: ShoppingListsViewModel
 
     private var mShoppingList: ShoppingList? = null
 
     private val args by navArgs<DetailsListFragmentArgs>()
-    private val listDetailsAdapter = DetailsListAdapter()
+    private val listDetailsAdapter = DetailsListAdapter(this)
     private var newList = true
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,6 +72,19 @@ class DetailsListFragment : Fragment(), AddDetailDialog.AddDetailDialogListener 
         return fragmentBinding.root
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.list_details_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.archive_list_item){
+            mShoppingList!!.isActive = false
+            mViewModel.updateShoppingList(mShoppingList!!)
+            requireActivity().supportFragmentManager.popBackStack()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun insertOrUpdate(shoppingList: ShoppingList) {
         if (newList) {
             mViewModel.insertShoppingList(shoppingList)
@@ -86,5 +99,9 @@ class DetailsListFragment : Fragment(), AddDetailDialog.AddDetailDialogListener 
             ShoppingListDetail(detailName, detailQuantity)
         )
         listDetailsAdapter.notifyDataSetChanged()
+    }
+
+    override fun onItemClicked(shoppingListDetail: ShoppingListDetail) {
+        mViewModel.updateDetail(shoppingListDetail)
     }
 }

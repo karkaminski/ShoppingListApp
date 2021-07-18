@@ -15,7 +15,7 @@ data class ShoppingList(
 
     @NotNull
     @ColumnInfo(name = "is_active")
-    val isActive: Boolean = true
+    var isActive: Boolean = true
 ) : Parcelable {
 
     @PrimaryKey(autoGenerate = true)

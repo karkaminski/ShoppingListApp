@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import pl.karkaminski.shoppinglistapp.data.ShoppingListWithDetails
 import pl.karkaminski.shoppinglistapp.databinding.ShoppingListsFragmentBinding
 import pl.karkaminski.shoppinglistapp.ui.ShoppingListsViewModel
+import pl.karkaminski.shoppinglistapp.ui.listdetails.DetailsListFragment
 import pl.karkaminski.shoppinglistapp.ui.mainviewpager.MainViewPagerFragmentDirections
 
 class ShoppingListsFragment(private val showActive: Boolean) : Fragment(),
@@ -25,7 +26,6 @@ class ShoppingListsFragment(private val showActive: Boolean) : Fragment(),
         val fragmentBinding = ShoppingListsFragmentBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(this).get(ShoppingListsViewModel::class.java)
-
 
         val shoppingListsAdapter = ShoppingListsAdapter(this)
         fragmentBinding.recyclerView.adapter = shoppingListsAdapter
