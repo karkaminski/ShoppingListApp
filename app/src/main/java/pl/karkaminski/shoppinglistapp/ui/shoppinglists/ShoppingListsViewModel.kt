@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import pl.karkaminski.shoppinglistapp.data.AppDatabase
 import pl.karkaminski.shoppinglistapp.data.ShoppingList
 import pl.karkaminski.shoppinglistapp.data.ShoppingListRepository
+import pl.karkaminski.shoppinglistapp.data.ShoppingListWithDetails
 
 class ShoppingListsViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -14,14 +15,16 @@ class ShoppingListsViewModel(application: Application) : AndroidViewModel(applic
     init {
         val shoppingListDao =
             AppDatabase.getDatabase(application.applicationContext).shoppingListDao()
-        repository = ShoppingListRepository(shoppingListDao)
+        val shoppingListDetailDao =
+            AppDatabase.getDatabase(application.applicationContext).shoppingListDetailDao()
+        repository = ShoppingListRepository(shoppingListDao, shoppingListDetailDao)
     }
 
     fun insert(shoppingList: ShoppingList) {
-        repository.insert(shoppingList)
+        repository.insertShoppingList(shoppingList)
     }
 
-    fun getAll(isActive:Boolean) : LiveData<List<ShoppingList>> {
-        return repository.getAll(isActive)
+    fun getAll(isActive:Boolean) : LiveData<List<ShoppingListWithDetails>> {
+        return repository.getAllListsWithDetails(isActive)
     }
 }

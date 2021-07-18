@@ -4,12 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import pl.karkaminski.shoppinglistapp.data.ShoppingList
+import pl.karkaminski.shoppinglistapp.data.ShoppingListWithDetails
 import pl.karkaminski.shoppinglistapp.databinding.ListItemShoppingListBinding
 
 class ShoppingListsAdapter(private var onClickListener : OnItemClickedListener)
     : RecyclerView.Adapter<ShoppingListsAdapter.ShoppingListsViewHolder>() {
 
-    var shoppingListsList = listOf<ShoppingList>()
+    var shoppingListsList = listOf<ShoppingListWithDetails>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShoppingListsViewHolder {
         return ShoppingListsViewHolder(
@@ -38,6 +39,6 @@ class ShoppingListsAdapter(private var onClickListener : OnItemClickedListener)
         : RecyclerView.ViewHolder(binding.root)
 
     interface OnItemClickedListener{
-        fun onItemClicked(shoppingList : ShoppingList)
+        fun onItemClicked(shoppingListWithDetails: ShoppingListWithDetails)
     }
 }

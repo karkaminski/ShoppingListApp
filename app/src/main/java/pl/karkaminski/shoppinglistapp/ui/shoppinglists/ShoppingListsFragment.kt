@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import pl.karkaminski.shoppinglistapp.data.ShoppingList
+import pl.karkaminski.shoppinglistapp.data.ShoppingListDetail
+import pl.karkaminski.shoppinglistapp.data.ShoppingListWithDetails
 import pl.karkaminski.shoppinglistapp.databinding.ShoppingListsFragmentBinding
 import pl.karkaminski.shoppinglistapp.ui.mainviewpager.MainViewPagerFragmentDirections
 
@@ -42,18 +44,17 @@ class ShoppingListsFragment(private val showActive: Boolean) : Fragment(),
         fragmentBinding.floatingActionButton.apply {
             isVisible = showActive
             setOnClickListener {
-                viewModel.insert(ShoppingList("Example list"))
-//                val action =
-//                    MainViewPagerFragmentDirections.actionMainViewPagerFragmentToListDetailsFragment(null)
-//                findNavController().navigate(action)
+                val action =
+                    MainViewPagerFragmentDirections.actionMainViewPagerFragmentToListDetailsFragment(null)
+                findNavController().navigate(action)
             }
         }
         return fragmentBinding.root
     }
 
-    override fun onItemClicked(shoppingList: ShoppingList) {
+    override fun onItemClicked(shoppingListWithDetails: ShoppingListWithDetails) {
         val action = MainViewPagerFragmentDirections
-            .actionMainViewPagerFragmentToListDetailsFragment(shoppingList)
+            .actionMainViewPagerFragmentToListDetailsFragment(shoppingListWithDetails)
 
         findNavController().navigate(action)
     }

@@ -8,19 +8,21 @@ import kotlinx.parcelize.Parcelize
 import org.jetbrains.annotations.NotNull
 
 @Parcelize
-@Entity
-data class ShoppingList(
-
+@Entity(tableName = "ShoppingListDetail")
+class ShoppingListDetail (
     @NotNull
-    @ColumnInfo(name = "name")
     val name: String,
 
-    @NotNull
-    @ColumnInfo(name = "is_active")
-    val isActive: Boolean = true
-) : Parcelable {
+    val quantity: Double = 0.0,
 
+    @NotNull
+    @ColumnInfo(name = "is_checked")
+    val isChecked: Boolean = false
+    ) : Parcelable {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "shopping_list_id")
+    @ColumnInfo(name = "detail_id")
     var id: Int? = null
-}
+
+    @ColumnInfo(name = "shopping_list_id")
+    var listId: Int? = null
+    }

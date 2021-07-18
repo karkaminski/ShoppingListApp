@@ -6,7 +6,7 @@
     <data>
         <variable
             name="shoppingList"
-            type="pl.karkaminski.shoppinglistapp.data.ShoppingList" />
+            type="pl.karkaminski.shoppinglistapp.data.ShoppingListWithDetails" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,7 +31,7 @@
             android:padding="5dp"
             app:layout_constraintStart_toEndOf="@+id/image_view_icon"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{shoppingList.name}"
+            android:text="@{shoppingList.listInfo.name}"
             tools:text="Sunday list" />
 
         <TextView
